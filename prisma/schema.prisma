@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  email            String            @id
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  nombre           String
+  apellido         String
+  password         String
+  telefono         String
+  direccion        String
+  ciudad           String
+  codigoPostal     String
+  estado           String
+  pais             String
+  profilePic       String
+  resenasProducto  ResenaProducto[]
+  resenasProveedor ResenaProveedor[]
+  pedidos          Pedido[]
+}
+
+model Categoria {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  nombre    String
+  productos Producto[]
+}
+
+model Proveedor {
+  email        String            @id
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  nombre       String
+  password     String
+  tipo         TipoProveedor
+  telefono     String
+  direccion    String
+  ciudad       String
+  codigoPostal String
+  estado       String
+  pais         String
+  profilePic   String
+  coordX       Float
+  coordY       Float
+  productos    Producto[]
+  resenas      ResenaProveedor[]
+  pedidos      Pedido[]
+}
+
+model Producto {
+  id          Int               @id @default(autoincrement())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  nombre      String
+  descripcion String
+  precio      Float
+  tipo        TipoProducto
+  idProveedor String
+  proveedor   Proveedor         @relation(fields: [idProveedor], references: [email])
+  idCategoria Int
+  imagen      String
+  categoria   Categoria         @relation(fields: [idCategoria], references: [id])
+  resenas     ResenaProducto[]
+  pedidos     ProductosPedido[]
+}
+
+enum TipoProveedor {
+  proveedor
+  restaurante
+}
+
+enum TipoProducto {
+  producto
+  platillo
+}
+
+model ResenaProducto {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  resena       String
+  calificacion Int
+  idUsuario    String
+  usuario      Usuario  @relation(fields: [idUsuario], references: [email])
+  idProducto   Int
+  producto     Producto @relation(fields: [idProducto], references: [id])
+}
+
+model ResenaProveedor {
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  resena       String
+  calificacion Int
+  idUsuario    String
+  usuario      Usuario   @relation(fields: [idUsuario], references: [email])
+  idProveedor  String
+  proveedor    Proveedor @relation(fields: [idProveedor], references: [email])
+}
+
+model Pedido {
+  id          Int               @id @default(autoincrement())
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  estado      estadoPedido
+  idUsuario   String
+  usuario     Usuario           @relation(fields: [idUsuario], references: [email])
+  idProveedor String
+  pagado      Boolean
+  proveedor   Proveedor         @relation(fields: [idProveedor], references: [email])
+  productos   ProductosPedido[]
+}
+
+enum estadoPedido {
+  pedidoRealizado
+  enviado
+  enReparto
+  entregado
+}
+
+model ProductosPedido {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  precio     Float
+  cantidad   Int
+  idProducto Int
+  producto   Producto @relation(fields: [idProducto], references: [id])
+  idPedido   Int
+  pedido     Pedido   @relation(fields: [idPedido], references: [id])
+}
