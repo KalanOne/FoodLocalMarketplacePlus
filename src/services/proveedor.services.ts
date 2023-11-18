@@ -42,6 +42,32 @@ export const getProveedor = async (email: string): Promise<Proveedor | null> => 
   return response;
 };
 
+export const getProveedorAll = async (): Promise<Proveedor[] | null> => {
+  const response = await db.proveedor.findMany();
+
+  return response;
+};
+
+export const getProveedorProveedor = async (): Promise<Proveedor[] | null> => {
+  const response = await db.proveedor.findMany({
+    where: {
+      tipo: "proveedor",
+    },
+  });
+
+  return response;
+};
+
+export const getProveedorRestaurant = async (): Promise<Proveedor[] | null> => {
+  const response = await db.proveedor.findMany({
+    where: {
+      tipo: "restaurante",
+    },
+  });
+
+  return response;
+};
+
 export const getProveedorLogin = async (proveedor: ProveedorLogin): Promise<string | null> => {
   const response = await db.proveedor.findUnique({
     where: {
