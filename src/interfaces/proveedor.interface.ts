@@ -5,6 +5,7 @@ export interface Proveedor {
   nombre: string;
   password: string;
   tipo: TipoProveedor;
+  idCategoria: number;
   telefono: string;
   direccion: string;
   ciudad: string;

@@ -17,6 +17,7 @@ export const insertProveedor = async (proveedor: Proveedor): Promise<Proveedor |
       nombre: proveedor.nombre,
       password: proveedor.password,
       tipo: proveedor.tipo,
+      idCategoria: proveedor.idCategoria,
       telefono: proveedor.telefono,
       direccion: proveedor.direccion,
       ciudad: proveedor.ciudad,
