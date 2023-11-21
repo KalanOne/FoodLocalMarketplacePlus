@@ -1,13 +1,12 @@
 import { db } from "../utils/db";
-import bcrypt from "bcrypt";
+import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
 import { Proveedor, ProveedorLogin } from "../interfaces/proveedor.interface";
-import { saltRounds } from "../config/config";
 
 export const insertProveedor = async (proveedor: Proveedor): Promise<Proveedor | null> => {
   const password = proveedor.password;
 
-  const hash = await bcrypt.hash(password, saltRounds);
+  const hash = await encrypt(password);
 
   proveedor.password = hash;
 
@@ -76,7 +75,7 @@ export const getProveedorLogin = async (proveedor: ProveedorLogin): Promise<stri
     },
   });
 
-  const passwordsMatch: Boolean = await bcrypt.compare(proveedor.password, response?.password || "");
+  const passwordsMatch: Boolean = await verify(proveedor.password, response?.password || "");
 
   if (!passwordsMatch) {
     return "NO_MATCH";

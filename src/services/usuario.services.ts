@@ -1,13 +1,12 @@
 import { db } from "../utils/db";
-import bcrypt from "bcrypt";
+import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
 import { Usuario, UsuarioLogin } from "../interfaces/usuario.interface";
-import { saltRounds } from "../config/config";
 
 export const insertUsuario = async (usuario: Usuario): Promise<Usuario | null> => {
   const password = usuario.password;
 
-  const hash = await bcrypt.hash(password, saltRounds);
+  const hash = await encrypt(password);
 
   usuario.password = hash;
 
@@ -47,7 +46,7 @@ export const getUsuarioLogin = async (usuario: UsuarioLogin): Promise<string | n
     },
   });
 
-  const passwordsMatch: Boolean = await bcrypt.compare(usuario.password, response?.password || "");
+  const passwordsMatch: Boolean = await verify(usuario.password, response?.password || "");
 
   if (!passwordsMatch) {
     return "NO_MATCH";
