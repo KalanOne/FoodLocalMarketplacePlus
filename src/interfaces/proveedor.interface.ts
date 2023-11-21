@@ -21,3 +21,15 @@ export interface ProveedorLogin {
   email: string;
   password: string;
 }
+
+export interface ProveedorUpdate {
+  idProveedor: string;
+  nombre: string;
+  telefono: string;
+  direccion: string;
+  ciudad: string;
+  codigoPostal: string;
+  estado: string;
+  coordX: number;
+  coordY: number;
+}

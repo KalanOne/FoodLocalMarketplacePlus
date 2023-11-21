@@ -2,9 +2,9 @@ import { body, param } from "express-validator";
 import { db } from "../../utils/db";
 
 export const createUsuarioRules = [
-  body("nombre").notEmpty(),
-  body("apellido").notEmpty(),
-  body("email").isEmail(),
+  body("nombre").notEmpty().withMessage("El nombre es obligatorio"),
+  body("apellido").notEmpty().withMessage("El apellido es obligatorio"),
+  body("email").isEmail().withMessage("El email no es valido"),
   body("email").custom((value: string) => {
     return db.usuario
       .findUnique({
@@ -39,13 +39,13 @@ export const createUsuarioRules = [
     .withMessage(
       "El password debe ser de minimo 10 caracteres, tener al menos 2 mayusculas, 2 minusculas, 3 numeros y 2 caracteres especiales"
     ),
-  body("telefono").isLength({ min: 10, max: 10 }),
-  body("direccion").notEmpty(),
-  body("ciudad").notEmpty(),
-  body("codigoPostal").isLength({ min: 5, max: 5 }),
-  body("estado").notEmpty(),
-  body("pais").notEmpty(),
-  body("profilePic").notEmpty(),
+  body("telefono").isLength({ min: 10, max: 10 }).withMessage("El telefono debe tener 10 digitos"),
+  body("direccion").notEmpty().withMessage("La direccion es obligatoria"),
+  body("ciudad").notEmpty().withMessage("La ciudad es obligatoria"),
+  body("codigoPostal").isLength({ min: 5, max: 5 }).withMessage("El codigo postal debe tener 5 digitos"),
+  body("estado").notEmpty().withMessage("El estado es obligatorio"),
+  body("pais").notEmpty().withMessage("El pais es obligatorio"),
+  body("profilePic").notEmpty().withMessage("La foto de perfil es obligatoria"),
 ];
 
 export const getUsuarioRules = [param("email").isEmail()];
