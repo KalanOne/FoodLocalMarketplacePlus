@@ -46,26 +46,26 @@ model CategoriaProveedor {
 }
 
 model Proveedor {
-  email        String             @id
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @updatedAt
-  nombre       String
-  password     String
-  tipo         TipoProveedor
-  idCategoria  Int
-  categoria    CategoriaProveedor @relation(fields: [idCategoria], references: [id])
-  telefono     String
-  direccion    String
-  ciudad       String
-  codigoPostal String
-  estado       String
-  pais         String
-  profilePic   String
-  coordX       Float
-  coordY       Float
-  productos    Producto[]
-  resenas      ResenaProveedor[]
-  pedidos      Pedido[]
+  email           String             @id
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  nombre          String
+  password        String
+  tipo            TipoProveedor
+  idCategoria     Int
+  categoria       CategoriaProveedor @relation(fields: [idCategoria], references: [id])
+  telefono        String
+  direccion       String
+  ciudad          String
+  codigoPostal    String
+  estado          String
+  pais            String
+  profilePic      String
+  coordX          Float
+  coordY          Float
+  productos       Producto[]
+  resenas         ResenaProveedor[]
+  pedidoProveedor PedidoProveedor[]
 }
 
 model Producto {
@@ -120,16 +120,26 @@ model ResenaProveedor {
 }
 
 model Pedido {
-  id          Int               @id @default(autoincrement())
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  estado      estadoPedido
-  idUsuario   String
-  usuario     Usuario           @relation(fields: [idUsuario], references: [email])
+  id              Int               @id @default(autoincrement())
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  estado          estadoPedido
+  idUsuario       String
+  usuario         Usuario           @relation(fields: [idUsuario], references: [email])
+  pagado          Boolean
+  productos       ProductosPedido[]
+  pedidoProveedor PedidoProveedor[]
+}
+
+model PedidoProveedor {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  resena      Boolean
+  idPedido    Int
+  pedido      Pedido    @relation(fields: [idPedido], references: [id])
   idProveedor String
-  pagado      Boolean
-  proveedor   Proveedor         @relation(fields: [idProveedor], references: [email])
-  productos   ProductosPedido[]
+  proveedor   Proveedor @relation(fields: [idProveedor], references: [email])
 }
 
 enum estadoPedido {
