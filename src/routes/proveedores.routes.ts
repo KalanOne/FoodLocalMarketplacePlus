@@ -8,6 +8,7 @@ import {
   getProveedores,
   getProveedoresTypeProveedor,
   getProveedoresTypeRestaurant,
+  getResenaPerProveedor
 } from "../controllers/proveedores.controller";
 import { createProveedorRules, getProveedorRules, loginProveedorRules } from "../middleware/validator/proveedores.rules";
 
@@ -30,5 +31,8 @@ router.post("/login", loginProveedorRules, validate, loginProveedor);
 
 // Para obtener informacion de un proveedor
 router.get("/:email", getProveedorRules, validate, getProveedo);
+
+// Para obtener reseñas
+router.get("/:email", getProveedorRules, validate, getResenaPerProveedor);
 
 export default router;

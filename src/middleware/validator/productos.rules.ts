@@ -44,3 +44,5 @@ export const createProductoRules = [
     }),
   body("imagen").notEmpty().isString(),
 ];
+
+export const getProductoRules = [param("idProducto").isNumeric()];

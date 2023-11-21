@@ -8,6 +8,7 @@ import {
   getProveedorAll,
   getProveedorProveedor,
   getProveedorRestaurant,
+  getResenaProveedor,
 } from "../services/proveedor.services";
 
 export const getProveedo = async (req: Request, res: Response): Promise<Response> => {
@@ -149,5 +150,31 @@ export const getProveedoresTypeRestaurant = async (req: Request, res: Response):
     return res.json(respuesta);
   } catch (error) {
     return handleHttp(res, "Error al obtener los restaurantes", error);
+  }
+};
+
+export const getResenaPerProveedor = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response = await getResenaProveedor(req.params.idProveedor);
+
+    var respuesta: Respuesta;
+
+    if (response == null) {
+      respuesta = {
+        msg: "No se encontraron reseñas de este proveedor",
+        error: true,
+        data: response,
+      };
+    } else {
+      respuesta = {
+        msg: "Reseñas de proveedor obtenidos",
+        error: false,
+        data: response,
+      };
+    }
+
+    return res.json(respuesta);
+  } catch (error) {
+    return handleHttp(res, "Error al obtener los proveedores", error);
   }
 };

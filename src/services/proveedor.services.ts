@@ -2,6 +2,7 @@ import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
 import { Proveedor, ProveedorLogin } from "../interfaces/proveedor.interface";
+import { ResenaProveedor } from "@prisma/client";
 
 export const insertProveedor = async (proveedor: Proveedor): Promise<Proveedor | null> => {
   const password = proveedor.password;
@@ -100,4 +101,14 @@ export const getProveedorLogin = async (proveedor: ProveedorLogin): Promise<stri
   const accessToken = jwt.sign(tokenData, process.env.ACCESS_TOKEN_SECRET || "", { expiresIn: "2w" });
 
   return accessToken;
+};
+
+export const getResenaProveedor = async (idProveedor: string): Promise<ResenaProveedor[] | null> => {
+  const response = await db.resenaProveedor.findMany({
+    where: {
+      idProveedor: idProveedor,
+    },
+  });
+
+  return response;
 };

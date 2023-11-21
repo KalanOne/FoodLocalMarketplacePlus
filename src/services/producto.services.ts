@@ -1,5 +1,6 @@
 import { db } from "../utils/db";
 import { Producto } from "../interfaces/producto.interface";
+import { ResenaProducto } from "../interfaces/resenaProd.interface";
 
 export const insertProducto = async (producto: Producto): Promise<Producto | null> => {
   const response = await db.producto.create({
@@ -21,6 +22,16 @@ export const getProductoProveedor = async (idProveedor: string): Promise<Product
   const response = await db.producto.findMany({
     where: {
       idProveedor: idProveedor,
+    },
+  });
+
+  return response;
+};
+
+export const getResenaProducto = async (idProducto: number): Promise<ResenaProducto[] | null> => {
+  const response = await db.resenaProducto.findMany({
+    where: {
+      idProducto: idProducto,
     },
   });
 
