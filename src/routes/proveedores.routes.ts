@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { validate } from "../middleware/validator";
-import { checkJwt, checkProveedor } from "../middleware/session";
 
 import {
   getProveedo,
@@ -9,14 +8,8 @@ import {
   getProveedores,
   getProveedoresTypeProveedor,
   getProveedoresTypeRestaurant,
-  putProveedor,
 } from "../controllers/proveedores.controller";
-import {
-  createProveedorRules,
-  getProveedorRules,
-  loginProveedorRules,
-  editProveedorRules,
-} from "../middleware/validator/proveedores.rules";
+import { createProveedorRules, getProveedorRules, loginProveedorRules } from "../middleware/validator/proveedores.rules";
 
 const router = Router();
 
@@ -31,9 +24,6 @@ router.get("/proveedores", getProveedoresTypeProveedor);
 
 // Para devolver los proveedores de tipo restaurante
 router.get("/restaurantes", getProveedoresTypeRestaurant);
-
-// Para editar un proveedor
-router.put("/", checkJwt, checkProveedor, editProveedorRules, validate, putProveedor);
 
 // Para hacer login como proveedor
 router.post("/login", loginProveedorRules, validate, loginProveedor);

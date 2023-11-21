@@ -16,3 +16,13 @@ export const insertProducto = async (producto: Producto): Promise<Producto | nul
 
   return response;
 };
+
+export const getProductoProveedor = async (idProveedor: string): Promise<Producto[] | null> => {
+  const response = await db.producto.findMany({
+    where: {
+      idProveedor: idProveedor,
+    },
+  });
+
+  return response;
+};
