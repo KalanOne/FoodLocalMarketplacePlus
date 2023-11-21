@@ -35,3 +35,13 @@ export const updateProducto = async (producto: ProductoUpdate): Promise<Producto
 
   return response;
 };
+
+export const deleteProducto = async (id: number): Promise<Producto | null> => {
+  const response = await db.producto.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  return response;
+};

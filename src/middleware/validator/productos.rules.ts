@@ -103,3 +103,22 @@ export const updateProductoRules = [
         });
     }),
 ];
+
+export const deleteProductoRules = [
+  param("id").isInt().withMessage("El id debe ser un numero entero"),
+  param("id").custom((value: string, { req }) => {
+    return db.producto
+      .findUnique({
+        where: {
+          id: parseInt(value),
+        },
+      })
+      .then((producto) => {
+        if (!producto) {
+          throw new Error("El id del producto no existe");
+        } else if (producto.idProveedor != req.body.idProveedor) {
+          throw new Error("El producto no pertenece al proveedor");
+        }
+      });
+  }),
+];
