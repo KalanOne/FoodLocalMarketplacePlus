@@ -122,3 +122,20 @@ export const deleteProductoRules = [
       });
   }),
 ];
+
+export const getProductoRules = [
+  param("email").isEmail().withMessage("El email debe ser un correo válido"),
+  param("email").custom((value: string) => {
+    return db.proveedor
+      .findUnique({
+        where: {
+          email: value,
+        },
+      })
+      .then((proveedor) => {
+        if (!proveedor) {
+          throw new Error("El proveedor no existe");
+        }
+      });
+  }),
+];

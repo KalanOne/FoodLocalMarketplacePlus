@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
 import { Respuesta } from "../interfaces/respuesta.interface";
-import { insertProducto, updateProducto, deleteProducto } from "../services/producto.services";
+import { insertProducto, selectProducto, updateProducto, deleteProducto } from "../services/producto.services";
 
 export const createProducto = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -26,6 +26,32 @@ export const createProducto = async (req: Request, res: Response): Promise<Respo
     return res.json(respuesta);
   } catch (error) {
     return handleHttp(res, "Error al crear el producto", error);
+  }
+};
+
+export const getProductos = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response = await selectProducto(req.params.email);
+
+    var respuesta: Respuesta;
+
+    if (response == null) {
+      respuesta = {
+        msg: "No se pudo obtener los productos",
+        error: true,
+        data: response,
+      };
+    } else {
+      respuesta = {
+        msg: "Productos obtenidos",
+        error: false,
+        data: response,
+      };
+    }
+
+    return res.json(respuesta);
+  } catch (error) {
+    return handleHttp(res, "Error al obtener los productos", error);
   }
 };
 

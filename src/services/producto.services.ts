@@ -17,6 +17,16 @@ export const insertProducto = async (producto: Producto): Promise<Producto | nul
   return response;
 };
 
+export const selectProducto = async (email: string): Promise<Producto[] | null> => {
+  const response = await db.producto.findMany({
+    where: {
+      idProveedor: email,
+    },
+  });
+
+  return response;
+};
+
 export const updateProducto = async (producto: ProductoUpdate): Promise<Producto | null> => {
   console.log(producto);
   const response = await db.producto.update({
