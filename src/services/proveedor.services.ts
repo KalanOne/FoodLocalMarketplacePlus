@@ -112,3 +112,16 @@ export const getResenaProveedor = async (idProveedor: string): Promise<ResenaPro
 
   return response;
 };
+
+export const insertResenaProveedor = async (resena: ResenaProveedor): Promise<ResenaProveedor | null> => {
+  const response = await db.resenaProveedor.create({
+    data: {
+      resena: resena.resena,
+      calificacion: resena.calificacion,
+      idUsuario: resena.idUsuario,
+      idProveedor: resena.idProveedor
+    }
+  });
+
+  return response;
+};

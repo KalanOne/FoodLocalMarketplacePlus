@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validate } from "../middleware/validator";
-
+import { checkJwt, checkUser } from "../middleware/session";
 import {
   getProveedo,
   createProveedor,
@@ -8,9 +8,11 @@ import {
   getProveedores,
   getProveedoresTypeProveedor,
   getProveedoresTypeRestaurant,
-  getResenaPerProveedor
+  getResenaPerProveedor,
+  createResenaProveedor
 } from "../controllers/proveedores.controller";
 import { createProveedorRules, getProveedorRules, loginProveedorRules } from "../middleware/validator/proveedores.rules";
+import { createResenaProveedorRules } from "../middleware/validator/resenas.rules";
 
 const router = Router();
 
@@ -34,5 +36,8 @@ router.get("/:email", getProveedorRules, validate, getProveedo);
 
 // Para obtener reseñas
 router.get("/resena/:email", getProveedorRules, validate, getResenaPerProveedor);
+
+// Para crear reseñas
+router.post("/resena/proveedor", checkJwt, checkUser, createResenaProveedorRules, validate, createResenaProveedor);
 
 export default router;

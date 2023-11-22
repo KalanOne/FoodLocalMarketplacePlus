@@ -9,6 +9,7 @@ import {
   getProveedorProveedor,
   getProveedorRestaurant,
   getResenaProveedor,
+  insertResenaProveedor,
 } from "../services/proveedor.services";
 
 export const getProveedo = async (req: Request, res: Response): Promise<Response> => {
@@ -175,5 +176,31 @@ export const getResenaPerProveedor = async (req: Request, res: Response): Promis
     return res.json(respuesta);
   } catch (error) {
     return handleHttp(res, "Error al obtener los proveedores", error);
+  }
+};
+
+export const createResenaProveedor = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response = await insertResenaProveedor(req.body);
+
+    var respuesta: Respuesta;
+
+    if (response == null) {
+      respuesta = {
+        msg: "No se pudo crear la resena",
+        error: true,
+        data: response,
+      };
+    } else {
+      respuesta = {
+        msg: "Resena creado",
+        error: false,
+        data: response,
+      };
+    }
+
+    return res.json(respuesta);
+  } catch (error) {
+    return handleHttp(res, "Error al crear la resena", error);
   }
 };
