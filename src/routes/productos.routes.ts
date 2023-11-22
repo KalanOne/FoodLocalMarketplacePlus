@@ -20,7 +20,7 @@ router.post("/", checkJwt, checkProveedor, createProductoRules, validate, create
 // Para obtener productos por proveedor
 router.get("/:email", getProveedorRules, validate, getProductoPerProveedor);
 
-// Para obtener reseñas
-router.get("/:idProducto", getProductoRules, validate, getResenaPerProducto);
+// Para obtener reseñas cambiar ruta o el get funciona encimado
+router.get("/resena/:idProducto", getProductoRules, validate, getResenaPerProducto);
 
 export default router;
