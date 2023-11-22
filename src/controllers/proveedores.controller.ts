@@ -155,8 +155,7 @@ export const getProveedoresTypeRestaurant = async (req: Request, res: Response):
 
 export const getResenaPerProveedor = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const response = await getResenaProveedor(req.params.idProveedor);
-
+    const response = await getResenaProveedor(req.params.email);
     var respuesta: Respuesta;
 
     if (response == null) {

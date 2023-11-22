@@ -33,6 +33,6 @@ router.post("/login", loginProveedorRules, validate, loginProveedor);
 router.get("/:email", getProveedorRules, validate, getProveedo);
 
 // Para obtener reseñas
-router.get("/:email", getProveedorRules, validate, getResenaPerProveedor);
+router.get("/resena/:email", getProveedorRules, validate, getResenaPerProveedor);
 
 export default router;

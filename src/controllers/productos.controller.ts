@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
 import { Respuesta } from "../interfaces/respuesta.interface";
 import { insertProducto, getProductoProveedor, getResenaProducto } from "../services/producto.services";
+import { Console } from "console";
 
 export const createProducto = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -31,8 +32,8 @@ export const createProducto = async (req: Request, res: Response): Promise<Respo
 
 export const getProductoPerProveedor = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const response = await getProductoProveedor(req.params.idProveedor);
-
+    const response = await getProductoProveedor(req.params.email);
+    
     var respuesta: Respuesta;
 
     if (response == null) {
@@ -58,7 +59,7 @@ export const getProductoPerProveedor = async (req: Request, res: Response): Prom
 export const getResenaPerProducto = async (req: Request, res: Response): Promise<Response> => {
   try {
     const response = await getResenaProducto(Number(req.params.idProducto));
-
+    
     var respuesta: Respuesta;
 
     if (response == null) {
