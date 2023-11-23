@@ -1,5 +1,4 @@
 //proveedores: arreglo de emails de los proveedores
-//montoTotal: monto total
 //productos: arreglo de getProductoRules, te voy a pasar 
 //            id
 //            precio
@@ -11,6 +10,7 @@ export interface Pedido {
     estado: estadoPedido;
     idUsuario: string;
     pagado: boolean;
-    
+    //proveedores: [];
+    //productos: [];
   }
   

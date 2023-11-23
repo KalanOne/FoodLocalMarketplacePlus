@@ -16,3 +16,15 @@ export interface UsuarioLogin {
   email: string;
   password: string;
 }
+
+export interface UsuarioUpdate {
+  email: string;
+  nombre: string;
+  apellido: string;
+  telefono: string;
+  direccion: string;
+  ciudad: string;
+  codigoPostal: string;
+  estado: string;
+  pais: string;
+}

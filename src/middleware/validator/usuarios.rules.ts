@@ -48,6 +48,31 @@ export const createUsuarioRules = [
   body("profilePic").notEmpty(),
 ];
 
+export const updateUsuarioRules = [
+  body("nombre").notEmpty(),
+  body("apellido").notEmpty(),
+  body("email").isEmail(),
+  body("email").custom((value: string) => {
+    return db.usuario
+      .findUnique({
+        where: {
+          email: value,
+        },
+      })
+      .then((usuario) => {
+        if (usuario) {
+          throw new Error("El email ya esta registrado");
+        }
+      });
+  }),
+  body("telefono").isLength({ min: 10, max: 10 }),
+  body("direccion").notEmpty(),
+  body("ciudad").notEmpty(),
+  body("codigoPostal").isLength({ min: 5, max: 5 }),
+  body("estado").notEmpty(),
+  body("pais").notEmpty(),
+];
+
 export const getUsuarioRules = [param("email").isEmail()];
 
 export const loginUsuarioRules = [body("email").isEmail(), body("password").notEmpty()];

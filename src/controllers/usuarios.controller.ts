@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
 import { Respuesta } from "../interfaces/respuesta.interface";
-import { insertUsuario, getUsuario, getUsuarioLogin } from "../services/usuario.services";
+import { insertUsuario, getUsuario, getUsuarioLogin, updateUsuario, newPedido } from "../services/usuario.services";
 
 export const getUser = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -45,6 +45,22 @@ export const createUser = async (req: Request, res: Response): Promise<Response>
   }
 };
 
+export const updateUser = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response = await updateUsuario(req.body);
+
+    const respuesta: Respuesta = {
+      msg: "Usuario actualizado",
+      error: false,
+      data: response,
+    };
+
+    return res.json(respuesta);
+  } catch (error) {
+    return handleHttp(res, "Error al actualizar el usuario", error);
+  }
+};
+
 export const loginUsuario = async (req: Request, res: Response): Promise<Response> => {
   try {
     const response = await getUsuarioLogin(req.body);
@@ -68,5 +84,21 @@ export const loginUsuario = async (req: Request, res: Response): Promise<Respons
     return res.json(respuesta);
   } catch (error) {
     return handleHttp(res, "Error al hacer login", error);
+  }
+};
+
+export const createPedido = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response = await newPedido(req.body);
+
+    const respuesta: Respuesta = {
+      msg: "Pedido creado",
+      error: false,
+      data: response,
+    };
+
+    return res.json(respuesta);
+  } catch (error) {
+    return handleHttp(res, "Error al crear el pedido", error);
   }
 };

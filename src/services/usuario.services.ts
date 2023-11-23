@@ -1,7 +1,9 @@
 import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
-import { Usuario, UsuarioLogin } from "../interfaces/usuario.interface";
+import { Usuario, UsuarioLogin, UsuarioUpdate } from "../interfaces/usuario.interface";
+import { Pedido } from "../interfaces/pedido.interface";
+import { estadoPedido } from "@prisma/client";
 
 export const insertUsuario = async (usuario: Usuario): Promise<Usuario | null> => {
   const password = usuario.password;
@@ -27,6 +29,27 @@ export const insertUsuario = async (usuario: Usuario): Promise<Usuario | null> =
   });
 
   return newUsuario;
+};
+
+export const updateUsuario = async (usuario: UsuarioUpdate): Promise<Usuario | null> => {
+
+  const updateUsuario = await db.usuario.update({
+    where: {
+      email: usuario.email
+    },
+    data: {
+      nombre: usuario.nombre,
+      apellido: usuario.apellido,
+      telefono: usuario.telefono,
+      direccion: usuario.direccion,
+      ciudad: usuario.ciudad,
+      codigoPostal: usuario.codigoPostal,
+      estado: usuario.estado,
+      pais: usuario.pais,
+    },
+  });
+
+  return updateUsuario;
 };
 
 export const getUsuario = async (email: string): Promise<Usuario | null> => {
@@ -60,4 +83,18 @@ export const getUsuarioLogin = async (usuario: UsuarioLogin): Promise<string | n
   const accessToken = jwt.sign(tokenData, process.env.ACCESS_TOKEN_SECRET || "", { expiresIn: "2w" });
 
   return accessToken;
+};
+
+export const newPedido = async (pedido: Pedido): Promise<Pedido | null> => {
+
+  const newPedido = await db.pedido.create({
+    data: {
+      estado: estadoPedido.pedidoRealizado,
+      idUsuario: pedido.idUsuario,
+      pagado: pedido.pagado,
+    },
+  });
+
+  return newPedido;
+
 };
