@@ -2,8 +2,10 @@ import { body, param } from "express-validator";
 import { db } from "../../utils/db";
 
 export const createProductoRules = [
-  body("nombre").notEmpty().isString(),
-  body("descripcion").notEmpty().isString(),
+  body("nombre").notEmpty().isString().withMessage("El nombre debe ser una cadena de caracteres"),
+  body("nombre").isLength({ min: 1, max: 64 }).withMessage("El nombre debe tener entre 1 y 64 caracteres"),
+  body("descripcion").notEmpty().isString().withMessage("La descripcion debe ser una cadena de caracteres"),
+  body("descripcion").isLength({ min: 1, max: 256 }).withMessage("La descripcion debe tener entre 1 y 256 caracteres"),
   body("precio")
     .notEmpty()
     .isFloat()
@@ -63,7 +65,9 @@ export const updateProductoRules = [
       });
   }),
   body("nombre").isString().withMessage("El nombre debe ser una cadena de caracteres"),
+  body("nombre").isLength({ min: 1, max: 64 }).withMessage("El nombre debe tener entre 1 y 64 caracteres"),
   body("descripcion").isString().withMessage("La descripcion debe ser una cadena de caracteres"),
+  body("descripcion").isLength({ min: 1, max: 256 }).withMessage("La descripcion debe tener entre 1 y 256 caracteres"),
   body("precio")
     .isFloat()
     .withMessage("El precio debe ser un numero decimal")
