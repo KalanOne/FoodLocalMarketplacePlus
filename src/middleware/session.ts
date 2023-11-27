@@ -45,6 +45,7 @@ export const checkUser = (req: Request, res: Response, next: NextFunction) => {
     if (user.tipo != "Usuario") {
       return res.status(402).json({ msg: "No tienes permisos para realizar esta acción" });
     }
+    req.body.idUsuario = user.email;
 
     next();
   } catch (error) {

@@ -135,7 +135,7 @@ model PedidoProveedor {
   id          Int       @id @default(autoincrement())
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  resena      Boolean
+  resena      Boolean   @default(false)
   idPedido    Int
   pedido      Pedido    @relation(fields: [idPedido], references: [id])
   idProveedor String
@@ -155,7 +155,7 @@ model ProductosPedido {
   updatedAt  DateTime @updatedAt
   precio     Float
   cantidad   Int
-  resena     Boolean
+  resena     Boolean  @default(false)
   idProducto Int
   producto   Producto @relation(fields: [idProducto], references: [id])
   idPedido   Int

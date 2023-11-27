@@ -1,4 +1,4 @@
-export interface ProductosPedido{
+export interface ProductoPedido{
     precio: number;
     cantidad: number;
     resena: boolean;
