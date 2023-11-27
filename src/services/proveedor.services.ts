@@ -1,8 +1,8 @@
 import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
-import { Proveedor, ProveedorLogin } from "../interfaces/proveedor.interface";
 import { ResenaProveedor } from "@prisma/client";
+import { Proveedor, ProveedorLogin, ProveedorUpdate } from "../interfaces/proveedor.interface";
 
 export const insertProveedor = async (proveedor: Proveedor): Promise<Proveedor | null> => {
   const password = proveedor.password;
@@ -33,6 +33,26 @@ export const insertProveedor = async (proveedor: Proveedor): Promise<Proveedor |
   return newProveedor;
 };
 
+export const updateProveedor = async (proveedor: ProveedorUpdate): Promise<Proveedor | null> => {
+  const response = await db.proveedor.update({
+    where: {
+      email: proveedor.idProveedor,
+    },
+    data: {
+      nombre: proveedor.nombre,
+      telefono: proveedor.telefono,
+      direccion: proveedor.direccion,
+      ciudad: proveedor.ciudad,
+      codigoPostal: proveedor.codigoPostal,
+      estado: proveedor.estado,
+      coordX: proveedor.coordX,
+      coordY: proveedor.coordY,
+    },
+  });
+
+  return response;
+};
+
 export const getProveedor = async (email: string): Promise<Proveedor | null> => {
   const response = await db.proveedor.findUnique({
     where: {
@@ -55,7 +75,6 @@ export const getProveedorAll = async (): Promise<Proveedor[] | null> => {
       resenas: true,
     },
   });
-  
 
   return response;
 };
@@ -119,8 +138,8 @@ export const insertResenaProveedor = async (resena: ResenaProveedor): Promise<Re
       resena: resena.resena,
       calificacion: resena.calificacion,
       idUsuario: resena.idUsuario,
-      idProveedor: resena.idProveedor
-    }
+      idProveedor: resena.idProveedor,
+    },
   });
 
   return response;

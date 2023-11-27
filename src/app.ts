@@ -8,6 +8,7 @@ import PingRoutes from "./routes/ping.routes";
 import UsuariosRoutes from "./routes/usuarios.routes";
 import ProveedorRoutes from "./routes/proveedores.routes";
 import CategoriaProveedorRoutes from "./routes/categoriasProv.routes";
+import CategoriaProductoRoutes from "./routes/categoriasProd.routes";
 import ProductosRoutes from "./routes/productos.routes";
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(PingRoutes);
 app.use("/usuario", UsuariosRoutes);
 app.use("/proveedor", ProveedorRoutes);
 app.use("/categoriaProveedor", CategoriaProveedorRoutes);
+app.use("/categoriaProducto", CategoriaProductoRoutes);
 app.use("/producto", ProductosRoutes);
 
 export default app;

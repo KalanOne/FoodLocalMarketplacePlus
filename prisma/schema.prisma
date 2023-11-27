@@ -14,15 +14,15 @@ model Usuario {
   email            String            @id
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
-  nombre           String
-  apellido         String
+  nombre           String            @db.VarChar(64)
+  apellido         String            @db.VarChar(64)
   password         String
-  telefono         String
-  direccion        String
-  ciudad           String
-  codigoPostal     String
-  estado           String
-  pais             String
+  telefono         String            @db.VarChar(10)
+  direccion        String            @db.VarChar(128)
+  ciudad           String            @db.VarChar(64)
+  codigoPostal     String            @db.VarChar(5)
+  estado           String            @db.VarChar(64)
+  pais             String            @db.VarChar(64)
   profilePic       String
   resenasProducto  ResenaProducto[]
   resenasProveedor ResenaProveedor[]
@@ -33,7 +33,7 @@ model Categoria {
   id        Int        @id @default(autoincrement())
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  nombre    String
+  nombre    String     @db.VarChar(64)
   productos Producto[]
 }
 
@@ -41,7 +41,7 @@ model CategoriaProveedor {
   id          Int         @id @default(autoincrement())
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-  nombre      String
+  nombre      String      @db.VarChar(64)
   proveedores Proveedor[]
 }
 
@@ -49,17 +49,17 @@ model Proveedor {
   email           String             @id
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
-  nombre          String
+  nombre          String             @db.VarChar(64)
   password        String
   tipo            TipoProveedor
   idCategoria     Int
   categoria       CategoriaProveedor @relation(fields: [idCategoria], references: [id])
-  telefono        String
-  direccion       String
-  ciudad          String
-  codigoPostal    String
-  estado          String
-  pais            String
+  telefono        String             @db.VarChar(10)
+  direccion       String             @db.VarChar(128)
+  ciudad          String             @db.VarChar(64)
+  codigoPostal    String             @db.VarChar(5)
+  estado          String             @db.VarChar(64)
+  pais            String             @db.VarChar(64)
   profilePic      String
   coordX          Float
   coordY          Float
@@ -72,8 +72,8 @@ model Producto {
   id          Int               @id @default(autoincrement())
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
-  nombre      String
-  descripcion String
+  nombre      String            @db.VarChar(64)
+  descripcion String            @db.VarChar(256)
   precio      Float
   tipo        TipoProducto
   idProveedor String
@@ -99,7 +99,7 @@ model ResenaProducto {
   id           Int      @id @default(autoincrement())
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  resena       String
+  resena       String   @db.VarChar(128)
   calificacion Int
   idUsuario    String
   usuario      Usuario  @relation(fields: [idUsuario], references: [email])
@@ -111,7 +111,7 @@ model ResenaProveedor {
   id           Int       @id @default(autoincrement())
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
-  resena       String
+  resena       String    @db.VarChar(128)
   calificacion Int
   idUsuario    String
   usuario      Usuario   @relation(fields: [idUsuario], references: [email])
