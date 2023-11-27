@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { validate } from "../middleware/validator";
 
-import { createUser, getUser, loginUsuario, updateUser, createPedido } from "../controllers/usuarios.controller";
-import { createUsuarioRules, getUsuarioRules, loginUsuarioRules, updateUsuarioRules } from "../middleware/validator/usuarios.rules";
+import { createUser, getUser, loginUsuario, updateUser, createPedido, updateContraseña, getPedido } from "../controllers/usuarios.controller";
+import { createUsuarioRules, getUsuarioRules, loginUsuarioRules, updateUsuarioRules, updateContraseñaRules } from "../middleware/validator/usuarios.rules";
 
 const router = Router();
 
@@ -12,6 +12,9 @@ router.post("/", createUsuarioRules, validate, createUser);
 // Para actualizar un usuario
 router.put("/update", updateUsuarioRules, validate, updateUser);
 
+// Para actualizar un usuario
+router.put("/contraseña", updateContraseñaRules, validate, updateContraseña);
+
 // Para obtener informacion de un usuario
 router.get("/:email", getUsuarioRules, validate, getUser);
 
@@ -20,5 +23,8 @@ router.post("/login", loginUsuarioRules, validate, loginUsuario);
 
 // Para hacer un pedido
 router.post("/pedido", validate, createPedido);
+
+// Para hacer consultar un pedido
+router.get("/pedido", validate, getPedido);
 
 export default router;

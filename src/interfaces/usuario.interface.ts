@@ -12,6 +12,11 @@ export interface Usuario {
   profilePic: string;
 }
 
+export interface ContraseñaUpdate {
+  email: string;
+  password: string;
+}
+
 export interface UsuarioLogin {
   email: string;
   password: string;

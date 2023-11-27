@@ -1,6 +1,18 @@
 import { body, param } from "express-validator";
 import { db } from "../../utils/db";
 
+export const updateContraseñaRules = [
+  body("email").isEmail(),
+  body("password").notEmpty(),
+  body("password")
+    .matches(
+      /^(?=.*[A-Z].*[A-Z])(?=.*[a-z].*[a-z])(?=.*[^a-zA-Z0-9].*[^a-zA-Z0-9])(?=.*\d.*\d.*\d)(?!.*([a-zA-Z0-9])\1{2,}).{10,}$/
+    )
+    .withMessage(
+      "El password debe ser de minimo 10 caracteres, tener al menos 2 mayusculas, 2 minusculas, 3 numeros y 2 caracteres especiales"
+    ),
+];
+
 export const createUsuarioRules = [
   body("nombre").notEmpty(),
   body("apellido").notEmpty(),

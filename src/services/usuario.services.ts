@@ -1,7 +1,7 @@
 import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
-import { Usuario, UsuarioLogin, UsuarioUpdate } from "../interfaces/usuario.interface";
+import { ContraseñaUpdate, Usuario, UsuarioLogin, UsuarioUpdate } from "../interfaces/usuario.interface";
 import { Pedido } from "../interfaces/pedido.interface";
 import { estadoPedido } from "@prisma/client";
 
@@ -52,10 +52,38 @@ export const updateUsuario = async (usuario: UsuarioUpdate): Promise<Usuario | n
   return updateUsuario;
 };
 
+export const updateNewContraseña = async (usuario: ContraseñaUpdate): Promise<ContraseñaUpdate | null> => {
+
+  const updateContraseña = await db.usuario.update({
+    where: {
+      email: usuario.email
+    },
+    data: {
+      password: usuario.password
+    },
+  });
+
+  return updateContraseña;
+};
+
 export const getUsuario = async (email: string): Promise<Usuario | null> => {
   const response = await db.usuario.findUnique({
     where: {
       email: email,
+    },
+  });
+
+  return response;
+};
+
+export const getPedidoUsuario = async (email: string): Promise<Pedido[] | null> => {
+  const response = await db.pedido.findMany({
+    where: {
+      idUsuario: email,
+    },
+    include: {
+      pedidoProveedor:{},
+      productos:{}
     },
   });
 
