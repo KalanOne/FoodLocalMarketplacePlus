@@ -71,22 +71,34 @@ seed();
 
 function getCategorias(): Array<Categoria> {
   return [
-    { name: "Alimentos" },
-    { name: "Electrodomésticos" },
-    { name: "Computadoras" },
+    // { name: "Electrodomésticos" },
+    // { name: "Computadoras" },
+    // { name: "Higiene" },
+    { name: "Alimentos Principales" },
     { name: "Bebidas" },
-    { name: "Higiene" },
+    { name: "Postres" },
+    { name: "Aperitivos" },
+    { name: "Toppings" },
+    { name: "Ensaladas" },
+    { name: "Sopas" },
     { name: "Otros" },
   ];
 }
 
 function getCategoriasProveedor(): Array<CategoriaProveedor> {
   return [
+    { name: "Comida Rápida" },
+    { name: "Café" },
     { name: "Bar" },
     { name: "Repostería" },
-    { name: "Café" },
+    { name: "Taqueria" },
+    { name: "Comida Mexicana" },
+    { name: "Comida China" },
+    { name: "Comida Japonesa" },
     { name: "Comida Italiana" },
+    { name: "Comida Española" },
     { name: "Comida Económica" },
+    { name: "Comida Vegetariana/Vegana" },
     { name: "Otros" },
   ];
 }
@@ -104,7 +116,20 @@ function getUsuarios(): Array<Usuario> {
       codigoPostal: "28001",
       estado: "Madrid",
       pais: "España",
-      profilePic: "algunar/Ruta",
+      profilePic: "algo/Ruta",
+    },
+    {
+      email: "onepunchalan59@gmail.com",
+      nombre: "Alan",
+      apellido: "Garcia Diaz",
+      password: "$2b$10$DKNPgasFY.2WBAJTzO8Myey6JBeTHsCp9wn8quKmlg1xy0xtTZGaO", //AbCdEfGhI1!@3jK4
+      telefono: "4435815700",
+      direccion: "Calle 123",
+      ciudad: "Shinjuku",
+      codigoPostal: "58000",
+      estado: "Tokyo",
+      pais: "Japón",
+      profilePic: "algo/Ruta",
     },
   ];
 }
