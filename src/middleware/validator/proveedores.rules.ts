@@ -58,6 +58,17 @@ export const createProveedorRules = [
   body("coordY").isFloat(),
 ];
 
+export const editProveedorRules = [
+  body("nombre").notEmpty().withMessage("El nombre es obligatorio"),
+  body("telefono").isLength({ min: 10, max: 10 }).withMessage("El telefono debe tener 10 digitos"),
+  body("direccion").notEmpty().withMessage("La direccion es obligatoria"),
+  body("ciudad").notEmpty().withMessage("La ciudad es obligatoria"),
+  body("codigoPostal").isLength({ min: 5, max: 5 }).withMessage("El codigo postal debe tener 5 digitos"),
+  body("estado").notEmpty().withMessage("El estado es obligatorio"),
+  body("coordX").isFloat().withMessage("La coordenada X es obligatoria"),
+  body("coordY").isFloat().withMessage("La coordenada Y es obligatoria"),
+];
+
 export const getProveedorRules = [param("email").isEmail()];
 
 export const loginProveedorRules = [body("email").isEmail(), body("password").notEmpty()];

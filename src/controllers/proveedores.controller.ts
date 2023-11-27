@@ -3,6 +3,7 @@ import { handleHttp } from "../utils/error.handle";
 import { Respuesta } from "../interfaces/respuesta.interface";
 import {
   insertProveedor,
+  updateProveedor,
   getProveedor,
   getProveedorLogin,
   getProveedorAll,
@@ -35,6 +36,32 @@ export const getProveedo = async (req: Request, res: Response): Promise<Response
     return res.json(respuesta);
   } catch (error) {
     return handleHttp(res, "Error al obtener el proveedor", error);
+  }
+};
+
+export const putProveedor = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response = await updateProveedor(req.body);
+
+    var respuesta: Respuesta;
+
+    if (response == null) {
+      respuesta = {
+        msg: "No se pudo actualizar el proveedor",
+        error: true,
+        data: response,
+      };
+    } else {
+      respuesta = {
+        msg: "Proveedor actualizado",
+        error: false,
+        data: response,
+      };
+    }
+
+    return res.json(respuesta);
+  } catch (error) {
+    return handleHttp(res, "Error al actualizar el proveedor", error);
   }
 };
 
