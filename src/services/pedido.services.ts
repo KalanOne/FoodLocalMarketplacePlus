@@ -32,3 +32,21 @@ export const updateEstado = async (id: number, estado: estadoPedido): Promise<Pe
 
   return response;
 };
+
+export const getPedidosProveedorS = async (idProveedor: string): Promise<Pedido[]> => {
+  console.log(idProveedor);
+  const response = await db.pedido.findMany({
+    where: {
+      pedidoProveedor: {
+        some: {
+          idProveedor: idProveedor,
+        },
+      },
+    },
+    include: {
+      productos: true,
+    },
+  });
+
+  return response;
+};

@@ -1,4 +1,6 @@
 import { db } from "../src/utils/db";
+import { Proveedor } from "../src/interfaces/proveedor.interface";
+import { Producto } from "../src/interfaces/producto.interface";
 
 type Categoria = {
   name: string;
@@ -65,15 +67,53 @@ async function seed() {
       });
     })
   );
+
+  // Crear proveedores
+  await Promise.all(
+    getProveedores().map((proveedor) => {
+      return db.proveedor.create({
+        data: {
+          nombre: proveedor.nombre,
+          email: proveedor.email,
+          tipo: proveedor.tipo,
+          idCategoria: proveedor.idCategoria,
+          password: proveedor.password,
+          telefono: proveedor.telefono,
+          direccion: proveedor.direccion,
+          ciudad: proveedor.ciudad,
+          codigoPostal: proveedor.codigoPostal,
+          estado: proveedor.estado,
+          pais: proveedor.pais,
+          profilePic: proveedor.profilePic,
+          coordX: proveedor.coordX,
+          coordY: proveedor.coordY,
+        },
+      });
+    })
+  );
+
+  // Crear productos
+  await Promise.all(
+    getProductos().map((producto) => {
+      return db.producto.create({
+        data: {
+          nombre: producto.nombre,
+          descripcion: producto.descripcion,
+          precio: producto.precio,
+          tipo: producto.tipo,
+          idProveedor: producto.idProveedor,
+          idCategoria: producto.idCategoria,
+          imagen: producto.imagen,
+        },
+      });
+    })
+  );
 }
 
 seed();
 
 function getCategorias(): Array<Categoria> {
   return [
-    // { name: "Electrodomésticos" },
-    // { name: "Computadoras" },
-    // { name: "Higiene" },
     { name: "Alimentos Principales" },
     { name: "Bebidas" },
     { name: "Postres" },
@@ -130,6 +170,75 @@ function getUsuarios(): Array<Usuario> {
       estado: "Tokyo",
       pais: "Japón",
       profilePic: "algo/Ruta",
+    },
+  ];
+}
+
+function getProveedores(): Array<Proveedor> {
+  return [
+    {
+      nombre: "Carl's Jr.",
+      email: "carl@jr.com",
+      tipo: "restaurante",
+      idCategoria: 1,
+      password: "$2b$10$omD0GEfGAE/i4Bod7/5pvuDAJXeEdQgUZN8lhab0Q83fYe5HHGSsq", //OLak&%1234
+      telefono: "1234567890",
+      direccion: "Av. Alvaro Obregon",
+      ciudad: "Hawai",
+      codigoPostal: "12345",
+      estado: "Hawai",
+      pais: "USA",
+      profilePic: "algo/Ruta",
+      coordX: 123.69,
+      coordY: 123.12,
+    },
+    {
+      nombre: "Starbucks",
+      email: "star@bucks.com",
+      tipo: "restaurante",
+      idCategoria: 2,
+      password: "$2b$10$omD0GEfGAE/i4Bod7/5pvuDAJXeEdQgUZN8lhab0Q83fYe5HHGSsq", //OLak&%1234
+      telefono: "1234567890",
+      direccion: "Av. Alvaro Obregon",
+      ciudad: "Cancun",
+      codigoPostal: "12345",
+      estado: "Quintana Roo",
+      pais: "México",
+      profilePic: "algo/Ruta",
+      coordX: 123.12,
+      coordY: 123.69,
+    },
+  ];
+}
+
+function getProductos(): Array<Producto> {
+  return [
+    {
+      nombre: "Hamburguesa",
+      descripcion: "Hamburguesa con queso de mi tio",
+      precio: 50,
+      tipo: "platillo",
+      idProveedor: "carl@jr.com",
+      idCategoria: 1,
+      imagen: "algo/Ruta",
+    },
+    {
+      nombre: "Café",
+      descripcion: "Café con leche de mi tio",
+      precio: 30,
+      tipo: "platillo",
+      idProveedor: "star@bucks.com",
+      idCategoria: 2,
+      imagen: "algo/Ruta",
+    },
+    {
+      nombre: "Papas fritas",
+      descripcion: "Papas fritas de las que me da mi tio",
+      precio: 20,
+      tipo: "platillo",
+      idProveedor: "carl@jr.com",
+      idCategoria: 1,
+      imagen: "algo/Ruta",
     },
   ];
 }

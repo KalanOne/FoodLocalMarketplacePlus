@@ -45,3 +45,17 @@ export const updateEstadoRules = [
     }
   }),
 ];
+
+export const proveedorRules = [
+  body("idProveedor").isEmail().withMessage("El id del proveedor debe ser un email"),
+  body("idProveedor").custom(async (value) => {
+    const proveedor = await db.proveedor.findUnique({
+      where: {
+        email: value,
+      },
+    });
+    if (!proveedor) {
+      throw new Error("El proveedor no existe");
+    }
+  }),
+];
