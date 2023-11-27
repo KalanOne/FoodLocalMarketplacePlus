@@ -1,11 +1,17 @@
 import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
-import { Usuario, UsuarioLogin, UsuarioUpdate } from "../interfaces/usuario.interface";
+import {
+  Usuario,
+  UsuarioLogin,
+  UsuarioUpdate,
+} from "../interfaces/usuario.interface";
 import { Pedido } from "../interfaces/pedido.interface";
 import { estadoPedido } from "@prisma/client";
 
-export const insertUsuario = async (usuario: Usuario): Promise<Usuario | null> => {
+export const insertUsuario = async (
+  usuario: Usuario
+): Promise<Usuario | null> => {
   const password = usuario.password;
 
   const hash = await encrypt(password);
@@ -31,11 +37,12 @@ export const insertUsuario = async (usuario: Usuario): Promise<Usuario | null> =
   return newUsuario;
 };
 
-export const updateUsuario = async (usuario: UsuarioUpdate): Promise<Usuario | null> => {
-
+export const updateUsuario = async (
+  usuario: UsuarioUpdate
+): Promise<Usuario | null> => {
   const updateUsuario = await db.usuario.update({
     where: {
-      email: usuario.email
+      email: usuario.email,
     },
     data: {
       nombre: usuario.nombre,
@@ -57,19 +64,28 @@ export const getUsuario = async (email: string): Promise<Usuario | null> => {
     where: {
       email: email,
     },
+    include: {
+      resenasProducto: true,
+      resenasProveedor: true,
+    },
   });
 
   return response;
 };
 
-export const getUsuarioLogin = async (usuario: UsuarioLogin): Promise<string | null> => {
+export const getUsuarioLogin = async (
+  usuario: UsuarioLogin
+): Promise<string | null> => {
   const response = await db.usuario.findUnique({
     where: {
       email: usuario.email,
     },
   });
 
-  const passwordsMatch: Boolean = await verify(usuario.password, response?.password || "");
+  const passwordsMatch: Boolean = await verify(
+    usuario.password,
+    response?.password || ""
+  );
 
   if (!passwordsMatch) {
     return "NO_MATCH";
@@ -80,13 +96,16 @@ export const getUsuarioLogin = async (usuario: UsuarioLogin): Promise<string | n
     tipo: "Usuario",
   };
 
-  const accessToken = jwt.sign(tokenData, process.env.ACCESS_TOKEN_SECRET || "", { expiresIn: "2w" });
+  const accessToken = jwt.sign(
+    tokenData,
+    process.env.ACCESS_TOKEN_SECRET || "",
+    { expiresIn: "2w" }
+  );
 
   return accessToken;
 };
 
 export const newPedido = async (pedido: Pedido): Promise<Pedido | null> => {
-
   const newPedido = await db.pedido.create({
     data: {
       estado: estadoPedido.pedidoRealizado,
@@ -96,5 +115,4 @@ export const newPedido = async (pedido: Pedido): Promise<Pedido | null> => {
   });
 
   return newPedido;
-
 };
