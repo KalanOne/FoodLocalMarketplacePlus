@@ -11,6 +11,7 @@ import CategoriaProveedorRoutes from "./routes/categoriasProv.routes";
 import CategoriaProductoRoutes from "./routes/categoriasProd.routes";
 import ProductosRoutes from "./routes/productos.routes";
 import PedidosRoutes from "./routes/pedidos.routes";
+import ImagenesRoutes from "./routes/image.routes";
 
 const app = express();
 
@@ -27,5 +28,6 @@ app.use("/categoriaProveedor", CategoriaProveedorRoutes);
 app.use("/categoriaProducto", CategoriaProductoRoutes);
 app.use("/producto", ProductosRoutes);
 app.use("/pedido", PedidosRoutes);
+app.use("/imagen", ImagenesRoutes);
 
 export default app;
