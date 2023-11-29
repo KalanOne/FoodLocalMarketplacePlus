@@ -13,7 +13,7 @@ router.post("/", createUsuarioRules, validate, createUser);
 router.put("/update", updateUsuarioRules, validate, updateUser);
 
 // Para actualizar contraseña de usuario
-router.put("/contraseña", updateContraseñaRules, validate, updateContraseña);
+router.put("/contrasena", updateContraseñaRules, validate, updateContraseña);
 
 // Para obtener informacion de un usuario
 router.get("/:email", getUsuarioRules, validate, getUser);
