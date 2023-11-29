@@ -64,6 +64,19 @@ export const updateUsuarioRules = [
   body("nombre").notEmpty(),
   body("apellido").notEmpty(),
   body("email").isEmail(),
+  body("email").custom((value: string) => {
+    return db.usuario
+      .findUnique({
+        where: {
+          email: value,
+        },
+      })
+      .then((usuario) => {
+        if (!usuario) {
+          throw new Error("El email no esta registrado");
+        }
+      });
+  }),
   body("telefono").isLength({ min: 10, max: 10 }),
   body("direccion").notEmpty(),
   body("ciudad").notEmpty(),
@@ -74,4 +87,7 @@ export const updateUsuarioRules = [
 
 export const getUsuarioRules = [param("email").isEmail()];
 
-export const loginUsuarioRules = [body("email").isEmail(), body("password").notEmpty()];
+export const loginUsuarioRules = [
+  body("email").isEmail(),
+  body("password").notEmpty(),
+];
