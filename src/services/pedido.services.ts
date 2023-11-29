@@ -66,12 +66,20 @@ export const getOnePedido = async (id: number): Promise<Pedido | null> => {
     include: {
       productos: {
         include: {
-          producto: true,
+          producto: {
+            include: {
+              resenas: true,
+            },
+          },
         },
       },
       pedidoProveedor: {
         include: {
-          proveedor: true,
+          proveedor: {
+            include: {
+              resenas: true,
+            },
+          },
         },
       },
     },
