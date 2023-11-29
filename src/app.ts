@@ -30,4 +30,6 @@ app.use("/producto", ProductosRoutes);
 app.use("/pedido", PedidosRoutes);
 app.use("/imagen", ImagenesRoutes);
 
+app.use("/uploads", express.static("uploads"));
+
 export default app;

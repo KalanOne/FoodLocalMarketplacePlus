@@ -67,6 +67,16 @@ export const getUsuario = async (email: string): Promise<Usuario | null> => {
     include: {
       resenasProducto: true,
       resenasProveedor: true,
+      pedidos: {
+        include: {
+          productos: true,
+          pedidoProveedor: {
+            include: {
+              proveedor: true,
+            },
+          },
+        },
+      },
     },
   });
 
