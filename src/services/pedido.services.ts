@@ -2,7 +2,9 @@ import { db } from "../utils/db";
 import { Pedido, PedidoCreate } from "../interfaces/pedido.interface";
 import { estadoPedido } from "@prisma/client";
 
-export const insertPedido = async (pedido: PedidoCreate): Promise<Pedido | null> => {
+export const insertPedido = async (
+  pedido: PedidoCreate
+): Promise<Pedido | null> => {
   const response = await db.pedido.create({
     data: {
       estado: "pedidoRealizado",
@@ -20,7 +22,10 @@ export const insertPedido = async (pedido: PedidoCreate): Promise<Pedido | null>
   return response;
 };
 
-export const updateEstado = async (id: number, estado: estadoPedido): Promise<Pedido | null> => {
+export const updateEstado = async (
+  id: number,
+  estado: estadoPedido
+): Promise<Pedido | null> => {
   const response = await db.pedido.update({
     where: {
       id: id,
@@ -33,7 +38,9 @@ export const updateEstado = async (id: number, estado: estadoPedido): Promise<Pe
   return response;
 };
 
-export const getPedidosProveedorS = async (idProveedor: string): Promise<Pedido[]> => {
+export const getPedidosProveedorS = async (
+  idProveedor: string
+): Promise<Pedido[]> => {
   console.log(idProveedor);
   const response = await db.pedido.findMany({
     where: {
@@ -57,8 +64,16 @@ export const getOnePedido = async (id: number): Promise<Pedido | null> => {
       id: id,
     },
     include: {
-      pedidoProveedor:{},
-      productos:{}
+      productos: {
+        include: {
+          producto: true,
+        },
+      },
+      pedidoProveedor: {
+        include: {
+          proveedor: true,
+        },
+      },
     },
   });
 
