@@ -50,3 +50,17 @@ export const getPedidosProveedorS = async (idProveedor: string): Promise<Pedido[
 
   return response;
 };
+
+export const getOnePedido = async (id: number): Promise<Pedido | null> => {
+  const response = await db.pedido.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      pedidoProveedor:{},
+      productos:{}
+    },
+  });
+
+  return response;
+};

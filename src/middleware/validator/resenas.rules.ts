@@ -3,6 +3,7 @@ import { db } from "../../utils/db";
 
 export const createResenaProductoRules = [
   body("resena").notEmpty().isString(),
+  body("idProductosPedido").notEmpty().isNumeric(),
   body("calificacion")
     .notEmpty()
     .isInt()
@@ -49,6 +50,7 @@ export const createResenaProductoRules = [
 
 export const createResenaProveedorRules = [
   body("resena").notEmpty().isString(),
+  body("idPedidoProveedor").notEmpty().isNumeric(),
   body("calificacion")
     .notEmpty()
     .isInt()

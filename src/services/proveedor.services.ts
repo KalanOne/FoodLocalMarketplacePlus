@@ -1,7 +1,7 @@
 import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
-import { ResenaProveedor } from "@prisma/client";
+import { ResenaProveedor, NewResenaProveedor } from "../interfaces/resenaProv.interface";
 import { Proveedor, ProveedorLogin, ProveedorUpdate } from "../interfaces/proveedor.interface";
 
 export const insertProveedor = async (proveedor: Proveedor): Promise<Proveedor | null> => {
@@ -132,7 +132,7 @@ export const getResenaProveedor = async (idProveedor: string): Promise<ResenaPro
   return response;
 };
 
-export const insertResenaProveedor = async (resena: ResenaProveedor): Promise<ResenaProveedor | null> => {
+export const insertResenaProveedor = async (resena: NewResenaProveedor): Promise<ResenaProveedor | null> => {
   const response = await db.resenaProveedor.create({
     data: {
       resena: resena.resena,
@@ -140,6 +140,16 @@ export const insertResenaProveedor = async (resena: ResenaProveedor): Promise<Re
       idUsuario: resena.idUsuario,
       idProveedor: resena.idProveedor,
     },
+  });
+
+  const response2 = await db.pedidoProveedor.update({
+    where: {
+      id: resena.idPedidoProveedor,
+      idProveedor: resena.idProveedor,
+    },
+    data: {
+      resena: true,
+    }
   });
 
   return response;

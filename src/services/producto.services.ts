@@ -1,6 +1,6 @@
 import { db } from "../utils/db";
 import { Producto, ProductoUpdate } from "../interfaces/producto.interface";
-import { ResenaProducto } from "../interfaces/resenaProd.interface";
+import { ResenaProducto, NewResenaProducto } from "../interfaces/resenaProd.interface";
 
 export const insertProducto = async (producto: Producto): Promise<Producto | null> => {
   const response = await db.producto.create({
@@ -77,7 +77,7 @@ export const getResenaProducto = async (idProducto: number): Promise<ResenaProdu
   return response;
 };
 
-export const insertResenaProducto = async (resena: ResenaProducto): Promise<ResenaProducto | null> => {
+export const insertResenaProducto = async (resena: NewResenaProducto): Promise<ResenaProducto | null> => {
   const response = await db.resenaProducto.create({
     data: {
       resena: resena.resena,
@@ -85,6 +85,15 @@ export const insertResenaProducto = async (resena: ResenaProducto): Promise<Rese
       idUsuario: resena.idUsuario,
       idProducto: resena.idProducto,
     },
+  });
+  const response2 = await db.productosPedido.update({
+    where: {
+      id: resena.idProductosPedido,
+      idProducto: resena.idProducto,
+    },
+    data: {
+      resena: true,
+    }
   });
 
   return response;

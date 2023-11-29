@@ -5,6 +5,7 @@ import {
   Usuario,
   UsuarioLogin,
   UsuarioUpdate,
+  ContraseñaUpdate,
 } from "../interfaces/usuario.interface";
 import { Pedido } from "../interfaces/pedido.interface";
 import { estadoPedido } from "@prisma/client";
@@ -57,6 +58,20 @@ export const updateUsuario = async (
   });
 
   return updateUsuario;
+};
+
+export const updateNewContraseña = async (usuario: ContraseñaUpdate): Promise<ContraseñaUpdate | null> => {
+
+  const updateContraseña = await db.usuario.update({
+    where: {
+      email: usuario.email
+    },
+    data: {
+      password: usuario.password
+    },
+  });
+
+  return updateContraseña;
 };
 
 export const getUsuario = async (email: string): Promise<Usuario | null> => {
