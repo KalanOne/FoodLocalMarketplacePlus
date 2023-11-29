@@ -47,6 +47,6 @@ router.put("/", checkJwt, checkProveedor, editProveedorRules, validate, putProve
 router.get("/resena/:email", getProveedorRules, validate, getResenaPerProveedor);
 
 // Para crear reseñas
-router.post("/resena/proveedor", checkJwt, checkUser, createResenaProveedorRules, validate, createResenaProveedor);
+router.post("/resena", checkJwt, checkUser, createResenaProveedorRules, validate, createResenaProveedor);
 
 export default router;

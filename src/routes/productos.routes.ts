@@ -42,6 +42,6 @@ router.get("/:email", getProveedorRules, validate, getProductoPerProveedor);
 router.get("/resena/:idProducto", getProductoResenasRules, validate, getResenaPerProducto);
 
 // Para crear reseñas
-router.post("/resena/producto", checkJwt, checkUser, createResenaProductoRules, validate, createResenaProducto);
+router.post("/resena", checkJwt, checkUser, createResenaProductoRules, validate, createResenaProducto);
 
 export default router;
