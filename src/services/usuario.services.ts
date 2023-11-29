@@ -60,14 +60,15 @@ export const updateUsuario = async (
   return updateUsuario;
 };
 
-export const updateNewContraseña = async (usuario: ContraseñaUpdate): Promise<ContraseñaUpdate | null> => {
-
+export const updateNewContraseña = async (
+  usuario: ContraseñaUpdate
+): Promise<ContraseñaUpdate | null> => {
   const updateContraseña = await db.usuario.update({
     where: {
-      email: usuario.email
+      email: usuario.email,
     },
     data: {
-      password: usuario.password
+      password: usuario.password,
     },
   });
 
@@ -90,6 +91,9 @@ export const getUsuario = async (email: string): Promise<Usuario | null> => {
               proveedor: true,
             },
           },
+        },
+        orderBy: {
+          id: "desc",
         },
       },
     },

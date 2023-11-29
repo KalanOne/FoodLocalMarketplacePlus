@@ -19,5 +19,5 @@ router.get("/proveedor", checkJwt, checkProveedor, proveedorRules, validate, get
 
 // Rutas de Fer
 // Para consultar un pedido
-router.get("/pedido", validate, getPedido);
+router.get("/:id", validate, getPedido);
 export default router;
