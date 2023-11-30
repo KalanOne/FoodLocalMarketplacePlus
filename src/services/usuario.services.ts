@@ -1,18 +1,11 @@
 import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
-import {
-  Usuario,
-  UsuarioLogin,
-  UsuarioUpdate,
-  ContraseñaUpdate,
-} from "../interfaces/usuario.interface";
+import { Usuario, UsuarioLogin, UsuarioUpdate, ContraseñaUpdate, UsuarioBrief } from "../interfaces/usuario.interface";
 import { Pedido } from "../interfaces/pedido.interface";
 import { estadoPedido } from "@prisma/client";
 
-export const insertUsuario = async (
-  usuario: Usuario
-): Promise<Usuario | null> => {
+export const insertUsuario = async (usuario: Usuario): Promise<UsuarioBrief | null> => {
   const password = usuario.password;
 
   const hash = await encrypt(password);
@@ -38,9 +31,7 @@ export const insertUsuario = async (
   return newUsuario;
 };
 
-export const updateUsuario = async (
-  usuario: UsuarioUpdate
-): Promise<Usuario | null> => {
+export const updateUsuario = async (usuario: UsuarioUpdate): Promise<UsuarioBrief | null> => {
   const updateUsuario = await db.usuario.update({
     where: {
       email: usuario.email,
@@ -60,9 +51,7 @@ export const updateUsuario = async (
   return updateUsuario;
 };
 
-export const updateNewContraseña = async (
-  usuario: ContraseñaUpdate
-): Promise<ContraseñaUpdate | null> => {
+export const updateNewContraseña = async (usuario: ContraseñaUpdate): Promise<ContraseñaUpdate | null> => {
   const updateContraseña = await db.usuario.update({
     where: {
       email: usuario.email,
@@ -75,7 +64,7 @@ export const updateNewContraseña = async (
   return updateContraseña;
 };
 
-export const getUsuario = async (email: string): Promise<Usuario | null> => {
+export const getUsuario = async (email: string): Promise<UsuarioBrief | null> => {
   const response = await db.usuario.findUnique({
     where: {
       email: email,
@@ -114,19 +103,14 @@ export const getUsuario = async (email: string): Promise<Usuario | null> => {
   return response;
 };
 
-export const getUsuarioLogin = async (
-  usuario: UsuarioLogin
-): Promise<string | null> => {
+export const getUsuarioLogin = async (usuario: UsuarioLogin): Promise<string | null> => {
   const response = await db.usuario.findUnique({
     where: {
       email: usuario.email,
     },
   });
 
-  const passwordsMatch: Boolean = await verify(
-    usuario.password,
-    response?.password || ""
-  );
+  const passwordsMatch: Boolean = await verify(usuario.password, response?.password || "");
 
   if (!passwordsMatch) {
     return "NO_MATCH";
@@ -137,11 +121,7 @@ export const getUsuarioLogin = async (
     tipo: "Usuario",
   };
 
-  const accessToken = jwt.sign(
-    tokenData,
-    process.env.ACCESS_TOKEN_SECRET || "",
-    { expiresIn: "2w" }
-  );
+  const accessToken = jwt.sign(tokenData, process.env.ACCESS_TOKEN_SECRET || "", { expiresIn: "2w" });
 
   return accessToken;
 };
@@ -156,4 +136,24 @@ export const newPedido = async (pedido: Pedido): Promise<Pedido | null> => {
   });
 
   return newPedido;
+};
+
+export const updateImageUsuario = async (email: string, image: string): Promise<UsuarioBrief | null> => {
+  const updateUsuario = await db.usuario.update({
+    where: {
+      email: email,
+    },
+    data: {
+      profilePic: "/uploads/" + image,
+    },
+    select: {
+      email: true,
+      nombre: true,
+      apellido: true,
+      telefono: true,
+      profilePic: true,
+    },
+  });
+
+  return updateUsuario;
 };

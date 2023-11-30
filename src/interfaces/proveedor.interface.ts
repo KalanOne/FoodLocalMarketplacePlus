@@ -33,3 +33,10 @@ export interface ProveedorUpdate {
   coordX: number;
   coordY: number;
 }
+
+export interface ProveedorBrief {
+  email: string;
+  nombre: string;
+  telefono: string;
+  profilePic: string;
+}

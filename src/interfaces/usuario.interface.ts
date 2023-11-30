@@ -33,3 +33,11 @@ export interface UsuarioUpdate {
   estado: string;
   pais: string;
 }
+
+export interface UsuarioBrief {
+  email: string;
+  nombre: string;
+  apellido: string;
+  telefono: string;
+  profilePic: string;
+}

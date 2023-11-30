@@ -2,7 +2,7 @@ import { db } from "../utils/db";
 import { encrypt, verify } from "../utils/bcrypt.handle";
 import jwt from "jsonwebtoken";
 import { ResenaProveedor, NewResenaProveedor } from "../interfaces/resenaProv.interface";
-import { Proveedor, ProveedorLogin, ProveedorUpdate } from "../interfaces/proveedor.interface";
+import { Proveedor, ProveedorLogin, ProveedorUpdate, ProveedorBrief } from "../interfaces/proveedor.interface";
 
 export const insertProveedor = async (proveedor: Proveedor): Promise<Proveedor | null> => {
   const password = proveedor.password;
@@ -149,8 +149,27 @@ export const insertResenaProveedor = async (resena: NewResenaProveedor): Promise
     },
     data: {
       resena: true,
-    }
+    },
   });
 
   return response;
+};
+
+export const updateImageProveedor = async (idProveedor: string, image: string): Promise<ProveedorBrief | null> => {
+  const updateProveedor = await db.proveedor.update({
+    where: {
+      email: idProveedor,
+    },
+    data: {
+      profilePic: "/uploads/" + image,
+    },
+    select: {
+      email: true,
+      nombre: true,
+      telefono: true,
+      profilePic: true,
+    },
+  });
+
+  return updateProveedor;
 };

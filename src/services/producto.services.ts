@@ -93,7 +93,20 @@ export const insertResenaProducto = async (resena: NewResenaProducto): Promise<R
     },
     data: {
       resena: true,
-    }
+    },
+  });
+
+  return response;
+};
+
+export const updateImageProducto = async (idProducto: string, image: string): Promise<Producto | null> => {
+  const response = await db.producto.update({
+    where: {
+      id: parseInt(idProducto),
+    },
+    data: {
+      imagen: "/uploads/" + image,
+    },
   });
 
   return response;
