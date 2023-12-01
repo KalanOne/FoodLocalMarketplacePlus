@@ -52,6 +52,12 @@ export const updateUsuario = async (usuario: UsuarioUpdate): Promise<UsuarioBrie
 };
 
 export const updateNewContraseña = async (usuario: ContraseñaUpdate): Promise<ContraseñaUpdate | null> => {
+  const password = usuario.password;
+
+  const hash = await encrypt(password);
+
+  usuario.password = hash;
+  
   const updateContraseña = await db.usuario.update({
     where: {
       email: usuario.email,
