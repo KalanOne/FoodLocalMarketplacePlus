@@ -1,7 +1,14 @@
 import { Request, Response } from "express";
 import { handleHttp } from "../utils/error.handle";
 import { Respuesta } from "../interfaces/respuesta.interface";
-import { insertUsuario, getUsuario, getUsuarioLogin, updateUsuario, newPedido, updateNewContraseña } from "../services/usuario.services";
+import {
+  insertUsuario,
+  getUsuario,
+  getUsuarioLogin,
+  updateUsuario,
+  newPedido,
+  updateNewContraseña,
+} from "../services/usuario.services";
 
 export const getUser = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -89,15 +96,15 @@ export const loginUsuario = async (req: Request, res: Response): Promise<Respons
         error: true,
         data: null,
       };
+      return res.status(401).json(respuesta);
     } else {
       respuesta = {
         msg: "Login exitoso",
         error: false,
         data: response,
       };
+      return res.json(respuesta);
     }
-
-    return res.json(respuesta);
   } catch (error) {
     return handleHttp(res, "Error al hacer login", error);
   }
