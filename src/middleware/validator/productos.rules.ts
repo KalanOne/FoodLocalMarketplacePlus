@@ -47,7 +47,22 @@ export const createProductoRules = [
   body("imagen").notEmpty().isString(),
 ];
 
-export const getProductoResenasRules = [param("idProducto").isNumeric()];
+export const getProductoResenasRules = [
+  param("idProducto").isNumeric(),
+  param("idProducto").custom((value: string) => {
+    return db.producto
+      .findUnique({
+        where: {
+          id: parseInt(value),
+        },
+      })
+      .then((producto) => {
+        if (!producto) {
+          throw new Error("El producto no existe");
+        }
+      });
+  }),
+];
 
 export const updateProductoRules = [
   param("id").isInt().withMessage("El id debe ser un numero entero"),

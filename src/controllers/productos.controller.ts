@@ -69,7 +69,7 @@ export const getResenaPerProducto = async (req: Request, res: Response): Promise
 
     var respuesta: Respuesta;
 
-    if (response == null) {
+    if (response?.length == 0) {
       respuesta = {
         msg: "No se encontraron reseñas de este producto",
         error: true,
@@ -77,7 +77,7 @@ export const getResenaPerProducto = async (req: Request, res: Response): Promise
       };
     } else {
       respuesta = {
-        msg: "Reseñas de producto obtenidos",
+        msg: "Reseñas de producto obtenidas",
         error: false,
         data: response,
       };
@@ -85,7 +85,7 @@ export const getResenaPerProducto = async (req: Request, res: Response): Promise
 
     return res.json(respuesta);
   } catch (error) {
-    return handleHttp(res, "Error al obtener los proveedores", error);
+    return handleHttp(res, "Error al obtener las reseñas del producto", error);
   }
 };
 

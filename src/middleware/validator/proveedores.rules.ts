@@ -69,6 +69,21 @@ export const editProveedorRules = [
   body("coordY").isFloat().withMessage("La coordenada Y es obligatoria"),
 ];
 
-export const getProveedorRules = [param("email").isEmail()];
+export const getProveedorRules = [
+  param("email").isEmail(),
+  param("email").custom((value: string) => {
+    return db.proveedor
+      .findUnique({
+        where: {
+          email: value,
+        },
+      })
+      .then((proveedor) => {
+        if (!proveedor) {
+          throw new Error("El email no esta registrado");
+        }
+      });
+  }),
+];
 
 export const loginProveedorRules = [body("email").isEmail(), body("password").notEmpty()];
