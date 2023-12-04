@@ -1,8 +1,13 @@
 import { db } from "../utils/db";
 import { Producto, ProductoUpdate } from "../interfaces/producto.interface";
-import { ResenaProducto, NewResenaProducto } from "../interfaces/resenaProd.interface";
+import {
+  ResenaProducto,
+  NewResenaProducto,
+} from "../interfaces/resenaProd.interface";
 
-export const insertProducto = async (producto: Producto): Promise<Producto | null> => {
+export const insertProducto = async (
+  producto: Producto
+): Promise<Producto | null> => {
   const response = await db.producto.create({
     data: {
       nombre: producto.nombre,
@@ -18,7 +23,9 @@ export const insertProducto = async (producto: Producto): Promise<Producto | nul
   return response;
 };
 
-export const selectProducto = async (email: string): Promise<Producto[] | null> => {
+export const selectProducto = async (
+  email: string
+): Promise<Producto[] | null> => {
   const response = await db.producto.findMany({
     where: {
       idProveedor: email,
@@ -28,7 +35,9 @@ export const selectProducto = async (email: string): Promise<Producto[] | null> 
   return response;
 };
 
-export const updateProducto = async (producto: ProductoUpdate): Promise<Producto | null> => {
+export const updateProducto = async (
+  producto: ProductoUpdate
+): Promise<Producto | null> => {
   console.log(producto);
   const response = await db.producto.update({
     where: {
@@ -57,7 +66,9 @@ export const deleteProducto = async (id: number): Promise<Producto | null> => {
   return response;
 };
 
-export const getProductoProveedor = async (idProveedor: string): Promise<Producto[] | null> => {
+export const getProductoProveedor = async (
+  idProveedor: string
+): Promise<Producto[] | null> => {
   const response = await db.producto.findMany({
     where: {
       idProveedor: idProveedor,
@@ -67,17 +78,24 @@ export const getProductoProveedor = async (idProveedor: string): Promise<Product
   return response;
 };
 
-export const getResenaProducto = async (idProducto: number): Promise<ResenaProducto[] | null> => {
+export const getResenaProducto = async (
+  idProducto: number
+): Promise<ResenaProducto[] | null> => {
   const response = await db.resenaProducto.findMany({
     where: {
       idProducto: idProducto,
+    },
+    include: {
+      usuario: true,
     },
   });
 
   return response;
 };
 
-export const insertResenaProducto = async (resena: NewResenaProducto): Promise<ResenaProducto | null> => {
+export const insertResenaProducto = async (
+  resena: NewResenaProducto
+): Promise<ResenaProducto | null> => {
   const response = await db.resenaProducto.create({
     data: {
       resena: resena.resena,
@@ -99,7 +117,10 @@ export const insertResenaProducto = async (resena: NewResenaProducto): Promise<R
   return response;
 };
 
-export const updateImageProducto = async (idProducto: string, image: string): Promise<Producto | null> => {
+export const updateImageProducto = async (
+  idProducto: string,
+  image: string
+): Promise<Producto | null> => {
   const response = await db.producto.update({
     where: {
       id: parseInt(idProducto),
