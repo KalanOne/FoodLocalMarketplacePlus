@@ -40,6 +40,9 @@ export const createUsuarioRules = [
       "El password debe ser de minimo 10 caracteres, tener al menos 2 mayusculas, 2 minusculas, 3 numeros y 2 caracteres especiales"
     ),
   body("telefono").isLength({ min: 10, max: 10 }),
+  body("telefono")
+    .matches(/^[0-9]+$/)
+    .withMessage("El telefono debe ser numerico"),
   body("direccion").notEmpty(),
   body("ciudad").notEmpty(),
   body("codigoPostal").isLength({ min: 5, max: 5 }),
@@ -74,7 +77,4 @@ export const updateUsuarioRules = [
 
 export const getUsuarioRules = [param("email").isEmail()];
 
-export const loginUsuarioRules = [
-  body("email").isEmail(),
-  body("password").notEmpty(),
-];
+export const loginUsuarioRules = [body("email").isEmail(), body("password").notEmpty()];

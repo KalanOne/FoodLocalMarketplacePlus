@@ -48,6 +48,9 @@ export const createProveedorRules = [
     }
   }),
   body("telefono").isLength({ min: 10, max: 10 }),
+  body("telefono")
+    .matches(/^[0-9]+$/)
+    .withMessage("El telefono debe ser numerico"),
   body("direccion").notEmpty(),
   body("ciudad").notEmpty(),
   body("codigoPostal").isLength({ min: 5, max: 5 }),
