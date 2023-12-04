@@ -180,7 +180,7 @@ function getProveedores(): Array<Proveedor> {
       nombre: "Carl's Jr.",
       email: "carl@jr.com",
       tipo: "restaurante",
-      idCategoria: 1,
+      idCategoria: 2,
       password: "$2b$10$omD0GEfGAE/i4Bod7/5pvuDAJXeEdQgUZN8lhab0Q83fYe5HHGSsq", //OLak&%1234
       telefono: "1234567890",
       direccion: "Av. Alvaro Obregon",
@@ -189,14 +189,14 @@ function getProveedores(): Array<Proveedor> {
       estado: "Hawai",
       pais: "USA",
       profilePic: "algo/Ruta",
-      coordX: 123.69,
-      coordY: 123.12,
+      coordX: 33.16007795588533,
+      coordY: -117.35059841591219,
     },
     {
       nombre: "Starbucks",
       email: "star@bucks.com",
       tipo: "restaurante",
-      idCategoria: 2,
+      idCategoria: 10,
       password: "$2b$10$omD0GEfGAE/i4Bod7/5pvuDAJXeEdQgUZN8lhab0Q83fYe5HHGSsq", //OLak&%1234
       telefono: "1234567890",
       direccion: "Av. Alvaro Obregon",
@@ -205,8 +205,8 @@ function getProveedores(): Array<Proveedor> {
       estado: "Quintana Roo",
       pais: "México",
       profilePic: "algo/Ruta",
-      coordX: 123.12,
-      coordY: 123.69,
+      coordX: 35.00906116293344,
+      coordY: 135.75938730413574,
     },
   ];
 }
