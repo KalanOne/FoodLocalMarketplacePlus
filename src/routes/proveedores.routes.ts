@@ -11,12 +11,14 @@ import {
   getProveedoresTypeRestaurant,
   getResenaPerProveedor,
   createResenaProveedor,
+  putPassProveedor,
 } from "../controllers/proveedores.controller";
 import {
   createProveedorRules,
   getProveedorRules,
   loginProveedorRules,
   editProveedorRules,
+  putPassRules,
 } from "../middleware/validator/proveedores.rules";
 import { createResenaProveedorRules } from "../middleware/validator/resenas.rules";
 
@@ -42,6 +44,9 @@ router.get("/:email", getProveedorRules, validate, getProveedo);
 
 // Para editar un proveedor
 router.put("/", checkJwt, checkProveedor, editProveedorRules, validate, putProveedor);
+
+// Para actualizar contraseña de proveedor
+router.put("/contrasena", checkJwt, checkProveedor, putPassRules, validate, putPassProveedor);
 
 // Para obtener reseñas
 router.get("/resena/:email", getProveedorRules, validate, getResenaPerProveedor);

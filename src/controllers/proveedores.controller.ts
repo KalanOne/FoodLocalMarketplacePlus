@@ -11,6 +11,7 @@ import {
   getProveedorRestaurant,
   getResenaProveedor,
   insertResenaProveedor,
+  updatePass,
 } from "../services/proveedor.services";
 
 export const getProveedo = async (req: Request, res: Response): Promise<Response> => {
@@ -229,5 +230,31 @@ export const createResenaProveedor = async (req: Request, res: Response): Promis
     return res.json(respuesta);
   } catch (error) {
     return handleHttp(res, "Error al crear la resena", error);
+  }
+};
+
+export const putPassProveedor = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response = await updatePass(req.body.idProveedor, req.body.password);
+
+    var respuesta: Respuesta;
+
+    if (response == null) {
+      respuesta = {
+        msg: "No se pudo actualizar la contraseña",
+        error: true,
+        data: response,
+      };
+    } else {
+      respuesta = {
+        msg: "Contraseña actualizada",
+        error: false,
+        data: response,
+      };
+    }
+
+    return res.json(respuesta);
+  } catch (error) {
+    return handleHttp(res, "Error al actualizar la contraseña", error);
   }
 };

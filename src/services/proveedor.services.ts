@@ -173,3 +173,24 @@ export const updateImageProveedor = async (idProveedor: string, image: string): 
 
   return updateProveedor;
 };
+
+export const updatePass = async (idProveedor: string, password: string): Promise<ProveedorBrief | null> => {
+  const hash = await encrypt(password);
+
+  const response = await db.proveedor.update({
+    where: {
+      email: idProveedor,
+    },
+    data: {
+      password: hash,
+    },
+    select: {
+      email: true,
+      nombre: true,
+      telefono: true,
+      profilePic: true,
+    },
+  });
+
+  return response;
+};
