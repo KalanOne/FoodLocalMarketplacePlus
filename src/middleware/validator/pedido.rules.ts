@@ -32,6 +32,16 @@ export const createPedidoRules = [
 
 export const updateEstadoRules = [
   param("id").isInt().withMessage("El id debe ser un numero entero"),
+  param("id").custom(async (value) => {
+    const pedido = await db.pedido.findUnique({
+      where: {
+        id: parseInt(value),
+      },
+    });
+    if (!pedido) {
+      throw new Error("El pedido no existe");
+    }
+  }),
   body("estado").custom((value) => {
     switch (value) {
       case "enviado":

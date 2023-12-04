@@ -30,11 +30,21 @@ export const updateEstado = async (id: number, estado: estadoPedido): Promise<Pe
     },
   });
 
+  if (response.estado == "entregado") {
+    return await db.pedido.update({
+      where: {
+        id: id,
+      },
+      data: {
+        pagado: true,
+      },
+    });
+  }
+
   return response;
 };
 
 export const getPedidosProveedorS = async (idProveedor: string): Promise<Pedido[]> => {
-  console.log(idProveedor);
   const response = await db.pedido.findMany({
     where: {
       pedidoProveedor: {
